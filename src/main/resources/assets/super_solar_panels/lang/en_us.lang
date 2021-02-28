@@ -165,3 +165,25 @@ super_solar_panels.module1=Module: Generation Day
 super_solar_panels.module2=Module: Generation Night
 super_solar_panels.module3=Module: Storage
 
+super_solar_panels.machines.spectral_solar_panelnight=Spectral Night Panel
+super_solar_panels.machines.singular_solar_panelnight=Singular Night Panel
+super_solar_panels.machines.admin_solar_panelnight=Light Absorbed Night Panel
+super_solar_panels.machines.photonic_solar_panelnight=Photonic Night Panel
+super_solar_panels.machines.proton_solar_panelnight=Proton Night Panel
+super_solar_panels.machines.neutronium_solar_panelnight=Neutron Night Panel
+super_solar_panels.machines.advanced_solar_panelnight=Improved Night Panel
+super_solar_panels.machines.hybrid_solar_panelnight=Hybrid Night Panel
+super_solar_panels.machines.ultimate_solar_panelnight=Ultimate Night Panel
+super_solar_panels.machines.quantum_solar_panelnight=Quantum Night Panel
+super_solar_panels.rotor_carbon4=Mythical Rotor
+super_solar_panels.rotor_carbon5=Neutron Rotor
+super_solar_panels.rotor_carbon6=Photonic Rotor
+super_solar_panels.crafting.depleted_toriy_fuel_rod=Fuel Rod (Lunch Thorium)
+super_solar_panels.crafting.depleted_dual_toriy_fuel_rod=Dual Fuel Rod (Depleted Thorium)
+super_solar_panels.crafting.depleted_quad_toriy_fuel_rod=Quad Fuel Rod (Depleted Thorium)
+super_solar_panels.toriy_fuel_rod=Fuel Rod (Thorium)
+super_solar_panels.dual_toriy_fuel_rod=Dual Fuel Rod (Thorium)
+super_solar_panels.quad_toriy_fuel_rod=Quad Fuel Rod (Thorium)
+item.toriy.name=Thorium
+tile.toriyore.name=Thorium Ore 
+
