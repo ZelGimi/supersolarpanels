@@ -35,6 +35,12 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 			case NIGHT:
 				tryGenerateEnergy((int) (this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight())));
 				break;
+			case DAYRAIN:
+				tryGenerateEnergy((int) ((this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay()))*0.65));
+				break;
+			case NIGHTRAIN:
+				tryGenerateEnergy((int) ((this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight()))*0.65));
+				break;	
 
 		}
 		if (this.storage > 0)
@@ -43,9 +49,17 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 
 	@Override
 	public void checkTheSky() {
-		this.active = canSeeSky(this.pos.up()) ? this.world.isDaytime() &&
-				!(this.canRain && (this.world.isRaining() || this.world.isThundering())) ?
-				GenerationState.DAY : GenerationState.NIGHT : GenerationState.NONE;
+		if(canSeeSky(this.pos.up()) && this.world.isDaytime() &&!(this.canRain && (this.world.isRaining() || this.world.isThundering()))) {
+	this.active = GenerationState.DAY;
+}else if(canSeeSky(this.pos.up()) && !this.world.isDaytime() &&!(this.canRain && (this.world.isRaining() || this.world.isThundering()))) {
+	this.active = GenerationState.NIGHT;
+}else if(canSeeSky(this.pos.up()) && this.world.isDaytime() && (this.canRain && (this.world.isRaining() || this.world.isThundering()))) {
+	this.active = GenerationState.DAYRAIN;
+}else if(canSeeSky(this.pos.up()) && !this.world.isDaytime() && (this.canRain && (this.world.isRaining() || this.world.isThundering()))) {
+	this.active = GenerationState.NIGHTRAIN;
+}else {
+	this.active = GenerationState.NONE;
+}
 	}
 
 	public boolean getGuiState(String name) {
@@ -53,6 +67,10 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 			return (this.active == GenerationState.DAY);
 		if ("moonlight".equals(name))
 			return (this.active == GenerationState.NIGHT);
+		if ("moonlightrain".equals(name))
+			return (this.active == GenerationState.NIGHTRAIN);
+		if ("sunlightrain".equals(name))
+			return (this.active == GenerationState.DAYRAIN);
 		if ("module1".equals(name))
 			return (this.chargeSlots.module_generate_day() == true);
 		if ("module2".equals(name))
@@ -69,6 +87,11 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay()), 3), Localization.translate("ic2.generic.text.EUt"));
 			case NIGHT:
 				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight()), 3), Localization.translate("ic2.generic.text.EUt"));
+			case DAYRAIN:
+				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString((this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay()))*0.65, 3), Localization.translate("ic2.generic.text.EUt"));
+			case NIGHTRAIN:
+				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString( (this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight()))*0.65, 3), Localization.translate("ic2.generic.text.EUt"));
+
 		}
 		return String.format("%s 0 %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Localization.translate("ic2.generic.text.EUt"));
 	}

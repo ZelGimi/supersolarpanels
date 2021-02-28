@@ -2,6 +2,8 @@ package com.denfop.ssp.tiles.panels.entity;
 
 
 import com.denfop.ssp.common.Constants;
+import com.denfop.ssp.tiles.panels.entity.BasePanelTE.GenerationState;
+
 import ic2.core.init.Localization;
 import ic2.core.util.Util;
 
@@ -51,6 +53,7 @@ public abstract class TileEntityRainPanel extends BasePanelTE {
 			return (this.active == GenerationState.RAIN);
 		if ("moonlight".equals(name))
 			return (this.active == GenerationState.RAIN);
+		
 		return super.getGuiState(name);
 	}
 
