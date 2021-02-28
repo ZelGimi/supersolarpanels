@@ -7,12 +7,15 @@ import java.util.function.Predicate;
 import org.lwjgl.input.Keyboard;
 
 import com.denfop.ssp.SuperSolarPanels;
+import com.denfop.ssp.common.BlocksRegister;
 import com.denfop.ssp.items.SSPItems;
 import com.denfop.ssp.items.armor.ItemArmorQuantumBoosts;
 import com.denfop.ssp.items.armor.ItemGraviChestplate;
 import com.denfop.ssp.items.armorbase.ItemAdvancedElectricJetpack;
 import com.denfop.ssp.keyboard.SSPKeys;
 
+import ic2.core.IC2Potion;
+import ic2.core.item.armor.ItemArmorHazmat;
 import ic2.core.util.StackUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +29,18 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
+	@SubscribeEvent
+	  public void radiation(LivingEvent.LivingUpdateEvent event) {
+		 if (!(event.getEntity() instanceof EntityPlayer))
+		      return;
+		 EntityPlayer entity = (EntityPlayer) event.getEntityLiving();
+		 for(int i = 0;i<36;i++) {
+		 if(entity.inventory.mainInventory.get(i) != null && entity.inventory.mainInventory.get(i).getItem() == BlocksRegister.toriy) {
+			 if (!ItemArmorHazmat.hasCompleteHazmat(entity))
+					IC2Potion.radiation.applyTo(entity, 200, 100);
+		 }
+		 }
+	}
 	 @SubscribeEvent
 	  public void updateAbilities(LivingEvent.LivingUpdateEvent event) {
 	    if (!(event.getEntity() instanceof EntityPlayer))
