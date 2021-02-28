@@ -20,6 +20,7 @@ public class CraftingThings extends ItemMulti<CraftingThings.CraftingTypes> {
 
     public CraftingThings() {
         super(null, CraftingTypes.class);
+        this.setCreativeTab(SuperSolarPanels.SSPTab);
         BlocksItems.registerItem((Item) this, SuperSolarPanels.getIdentifier(NAME)).setUnlocalizedName(NAME);
     }
 
@@ -92,7 +93,7 @@ public class CraftingThings extends ItemMulti<CraftingThings.CraftingTypes> {
 		compress_platium_plate(61),
 		QuantumItems7(51)*/,
         photoniy_ingot(51),
-        photoniy(52);
+        photoniy(52), depleted_toriy_fuel_rod(53), depleted_dual_toriy_fuel_rod(54), depleted_quad_toriy_fuel_rod(55);
 
         private final String name;
         private final int ID;
