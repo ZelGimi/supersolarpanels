@@ -1,5 +1,6 @@
 package com.denfop.ssp;
 
+import com.denfop.ssp.common.BlocksRegister;
 import com.denfop.ssp.common.Configs;
 import com.denfop.ssp.fluid.neutron.FluidRegister;
 import com.denfop.ssp.items.SSPItems;
@@ -16,6 +17,7 @@ import ic2.core.util.ConfigUtil;
 import ic2.core.util.StackUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -182,6 +184,7 @@ public final class SPPRecipes {
 		//
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5), "ACA", "CBC", "ACA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2));
 
+		
 		addCompressorRecipe(input.forStack(IC2Items.getItem("misc_resource", "iridium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
 		addExtrudingRecipe(input.forStack(IC2Items.getItem("crafting", "iridium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("resource", "uranium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
@@ -257,6 +260,12 @@ public final class SPPRecipes {
 				'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM_ALLOY));
 
 		//
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.spectral_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.spectral_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.photonic_solar_panelnight), "BA", 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.photonic_solar_panel), 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse));
+		
+		//
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.spectral_solar_panelsun), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.sunlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.spectral_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panelsun), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.sunlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panelsun), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.sunlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panel));
@@ -271,7 +280,12 @@ public final class SPPRecipes {
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.proton_solar_panelrain), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.rainlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.proton_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.neutronium_solar_panelrain), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.rainlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.neutronium_solar_panel));
 
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.hybrid_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.hybrid_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.ultimate_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.ultimate_solar_panel));
+		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.quantum_solar_panelnight), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nightlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.quantum_solar_panel));
 
+		
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panelsun), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.sunlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.hybrid_solar_panelsun), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.sunlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.hybrid_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panelrain), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.rainlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panel));
@@ -282,14 +296,78 @@ public final class SPPRecipes {
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.ultimate_solar_panelrain), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.rainlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.ultimate_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.quantum_solar_panelrain), "BA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.rainlinse), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.quantum_solar_panel));
 		//
+		addcanerRecipe(input.forStack(IC2Items.getItem("crafting", "fuel_rod"), 1), input1.forStack(new ItemStack(BlocksRegister.toriy)), new ItemStack(SSPItems.TORIY_FUEL_ROD.getInstance()));
+		
 		addcanerRecipe(input.forStack(IC2Items.getItem("crafting", "fuel_rod"), 1), input1.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton)), new ItemStack(SSPItems.PROTON_FUEL_ROD.getInstance()));
-		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod)), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protonshard));
-		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod)), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod));
-		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod)), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod));
-		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_eit_proton_fuel_rod)), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod));
-		addShapedColourRecipe(new ItemStack(SSPItems.DUAL_PROTON_FUEL_ROD.getInstance()), "SQS",
+		
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod)), new ItemStack[] { SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protonshard).splitStack(2)});
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod)), new ItemStack[] {SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_proton_fuel_rod)});
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod)), new ItemStack[] {SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_proton_fuel_rod)});
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_eit_proton_fuel_rod)), new ItemStack[] {SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_proton_fuel_rod)});
+		//
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_toriy_fuel_rod)),new ItemStack[] {new ItemStack(BlocksRegister.toriy),});
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_dual_toriy_fuel_rod)), new ItemStack[] {new ItemStack(BlocksRegister.toriy,2)});
+		addcentrifugeRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.depleted_quad_toriy_fuel_rod)),new ItemStack[] { new ItemStack(BlocksRegister.toriy,4)});
+		
+		//
+		addShapedColourRecipe(new ItemStack(SSPItems.module1.getInstance()), "SQS",
 
-				'S', new ItemStack(SSPItems.PROTON_FUEL_ROD.getInstance()),
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.ENRICHED_SUNNARIUM),
+				//  Character.valueOf('C'), IC2Items.getItem("crafting", "advanced_circuit"),
+				'Q', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton)
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.module2.getInstance()), "SQS",
+
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3),
+				//  Character.valueOf('C'), IC2Items.getItem("crafting", "advanced_circuit"),
+				'Q', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy_ingot)
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.module3.getInstance()), "SQS",
+
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.ultimate_core),
+				//  Character.valueOf('C'), IC2Items.getItem("crafting", "advanced_circuit"),
+				'Q', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems4)
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.DUAL_TORIY_FUEL_ROD.getInstance()), "SQS",
+
+				'S', new ItemStack(SSPItems.TORIY_FUEL_ROD.getInstance()),
+				//  Character.valueOf('C'), IC2Items.getItem("crafting", "advanced_circuit"),
+				'Q', IC2Items.getItem("plate", "iron")
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.QUAD_TORIY_FUEL_ROD.getInstance()), " S ", "CQC", " S ",
+
+				'S', new ItemStack(SSPItems.DUAL_TORIY_FUEL_ROD.getInstance()),
+				'C', IC2Items.getItem("plate", "copper"),
+				'Q', IC2Items.getItem("plate", "iron")
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.QUAD_TORIY_FUEL_ROD.getInstance()), "SQS", "CQC", "SQS",
+
+				'S', new ItemStack(SSPItems.TORIY_FUEL_ROD.getInstance()),
+				'C', IC2Items.getItem("plate", "copper"),
+				'Q', IC2Items.getItem("plate", "iron")
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		//
+		addShapedColourRecipe(new ItemStack(SSPItems.DUAL_TORIY_FUEL_ROD.getInstance()), "SQS",
+
+				'S', new ItemStack(SSPItems.TORIY_FUEL_ROD.getInstance()),
 				//  Character.valueOf('C'), IC2Items.getItem("crafting", "advanced_circuit"),
 				'Q', IC2Items.getItem("plate", "iron")
 				// Character.valueOf('G'),
@@ -365,6 +443,41 @@ public final class SPPRecipes {
 				// IC2Items.getItem("cable", "type:glass,insulation:0"),
 				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
 		);
+		//
+		addShapedColourRecipe(new ItemStack(SSPItems.MYPHICAL_ROTOR.getInstance()), " S ",
+				"CQC",
+				" S ",
+
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5),
+				'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy_ingot),
+				'Q', new ItemStack(SSPItems.SPECTRAL.getInstance())
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.PHOTON_ROTOR.getInstance()), " S ",
+				"CQC",
+				" S ",
+
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems4),
+				'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nanobox),
+				'Q', new ItemStack(SSPItems.MYPHICAL_ROTOR.getInstance())
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		addShapedColourRecipe(new ItemStack(SSPItems.NEUTRON_ROTOR.getInstance()), " S ",
+				"CQC",
+				" S ",
+
+				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3),
+				'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.neutronshard),
+				'Q', new ItemStack(SSPItems.PHOTON_ROTOR.getInstance())
+				// Character.valueOf('G'),
+				// IC2Items.getItem("cable", "type:glass,insulation:0"),
+				//  Character.valueOf('T'), IC2Items.getItem("te", "hv_transformer")
+		);
+		//
 		addShapedColourRecipe(new ItemStack(SSPItems.TWELVE_HEAT_STORAGE.getInstance()), "TCT",
 				"TGT",
 				"TCT",
@@ -412,8 +525,10 @@ public final class SPPRecipes {
 		Recipes.cannerBottle.addRecipe(input, input1, output, false);
 	}
 
-	private static void addcentrifugeRecipe(IRecipeInput input, ItemStack output, ItemStack itemStack) {
-		Recipes.centrifuge.addRecipe(input, null, false, output, itemStack);
+	private static void addcentrifugeRecipe(IRecipeInput input, ItemStack[] output) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setShort("minHeat", (short) 5000);
+		Recipes.centrifuge.addRecipe(input, nbt, false, output );
 	}
 
 	static void addMolecularTransformerRecipes() {
