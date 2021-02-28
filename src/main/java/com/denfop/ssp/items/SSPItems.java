@@ -9,6 +9,7 @@ import com.denfop.ssp.items.armor.ItemGraviChestplate;
 import com.denfop.ssp.items.battery.ItemBattery;
 import com.denfop.ssp.items.reactors.ItemReactorHeatStorage;
 import com.denfop.ssp.items.reactors.ItemReactorProton;
+import com.denfop.ssp.items.reactors.ItemReactorToriy;
 import com.denfop.ssp.items.resource.CraftingThings;
 import com.denfop.ssp.items.resource.CraftingThings.CraftingTypes;
 import com.denfop.ssp.items.tools.ItemNanoSaber;
@@ -28,7 +29,7 @@ import javax.annotation.Nonnull;
 public enum SSPItems {
 	QUANTUM_LEGGINGS, QUANTUM_BOOSTS, CRAFTING, GRAVI_CHESTPLATE, ADVANCED_CRYSTAL, QUANTUM_SABER, SPECTRAL_SABER, QUANTUM_HELMET, TWELVE_HEAT_STORAGE, MAX_HEAT_STORAGE, PROTON_FUEL_ROD, QUAD_PROTON_FUEL_ROD, EIT_PROTON_FUEL_ROD, DUAL_PROTON_FUEL_ROD,
 	DRILL,module1,module2,module3,
-	IRIDIUM_ROTOR, COMPRESS_IRIDIUM_ROTOR, SPECTRAL;
+	IRIDIUM_ROTOR, COMPRESS_IRIDIUM_ROTOR, SPECTRAL, MYPHICAL_ROTOR, PHOTON_ROTOR, NEUTRON_ROTOR, TORIY_FUEL_ROD, DUAL_TORIY_FUEL_ROD, QUAD_TORIY_FUEL_ROD;
 	//battery_su
 
 	public Item instance;
@@ -52,6 +53,15 @@ public enum SSPItems {
 		IRIDIUM_ROTOR.setInstance(new ItemWindRotor("rotor_carbon1", Configs.iridiumRotorRadius, Configs.rotor_carbon1, Configs.coefficient, Configs.minWindStrength, Configs.maxWindStrength, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model1.png")));
 		COMPRESS_IRIDIUM_ROTOR.setInstance(new ItemWindRotor("rotor_carbon2", Configs.compressIridiumRotorRadius, Configs.rotor_carbon2, Configs.coefficient1, Configs.minWindStrength1, Configs.maxWindStrength1, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model2.png")));
 		SPECTRAL.setInstance(new ItemWindRotor("rotor_carbon3", Configs.spectralRotorRadius, Configs.rotor_carbon3, Configs.coefficient2, Configs.minWindStrength2, Configs.maxWindStrength2, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model3.png")));
+		//
+		TORIY_FUEL_ROD.setInstance(new ItemReactorToriy("toriy_fuel_rod", 1));
+	DUAL_TORIY_FUEL_ROD.setInstance(new ItemReactorToriy("dual_toriy_fuel_rod", 2));
+		QUAD_TORIY_FUEL_ROD.setInstance(new ItemReactorToriy("quad_toriy_fuel_rod", 4));
+		//
+		MYPHICAL_ROTOR.setInstance(new ItemWindRotor("rotor_carbon4", Configs.mythicalRotorRadius, Configs.rotor_carbon4, Configs.coefficient4, Configs.minWindStrength4, Configs.maxWindStrength4, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model4.png")));
+		PHOTON_ROTOR.setInstance(new ItemWindRotor("rotor_carbon6", Configs.photonRotorRadius, Configs.rotor_carbon6, Configs.coefficient6, Configs.minWindStrength6, Configs.maxWindStrength6, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model6.png")));
+		NEUTRON_ROTOR.setInstance(new ItemWindRotor("rotor_carbon5", Configs.neutronRotorRadius, Configs.rotor_carbon5, Configs.coefficient5, Configs.minWindStrength5, Configs.maxWindStrength5, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model5.png")));
+		//
 	    module1.setInstance(new ItemModule("module1"));
 		module2.setInstance(new ItemModule("module2"));
 		module3.setInstance(new ItemModule("module3"));
