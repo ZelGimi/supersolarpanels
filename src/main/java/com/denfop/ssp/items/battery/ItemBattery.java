@@ -28,7 +28,7 @@ public class ItemBattery extends BaseElectricItem {
 
 	public ItemBattery(String name, double maxCharge, double transferLimit, int tier) {
 		super(null, maxCharge, transferLimit, tier);
-
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 		setMaxStackSize(16);
 		BlocksItems.registerItem(this, SuperSolarPanels.getIdentifier(this.name = name)).setUnlocalizedName(name);
 	}

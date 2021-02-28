@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IBoostingJetpack {
+public class ItemAdvancedElectricJetpack extends ItemArmorElectric   {
 	protected final String name;
 
 	public ItemAdvancedElectricJetpack() {
@@ -77,23 +77,10 @@ public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IB
 	public void onArmorTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack stack) {
 		NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
 		byte toggleTimer = nbt.getByte("toggleTimer");
-		if (SSPKeys.isFlyKeyDown(player) && toggleTimer == 0) {
-			nbt.setByte("toggleTimer", toggleTimer = 10);
-			/*if (!world.isRemote) {
-				String mode;
-				if (switchJetpack(stack)) {
-					mode = TextFormatting.DARK_GREEN + Localization.translate("gravisuite.message.on");
-				} else {
-					mode = TextFormatting.DARK_RED + Localization.translate("gravisuite.message.off");
-				}
-			}*/
-		}
-		if (toggleTimer > 0 && !isJetpackOn(stack)) {
-			toggleTimer = (byte) (toggleTimer - 1);
-			nbt.setByte("toggleTimer", toggleTimer);
-		}
+		
+		
 		boolean ret = false;
-		NBTTagCompound nbtData = StackUtil.getOrCreateNbtData(stack);
+		NBTTagCompound nbtData = SuperSolarPanels.getOrCreateNbtData1(player);
 		boolean Nightvision = nbtData.getBoolean("Nightvision");
 		short hubmode = nbtData.getShort("HudMode");
 		if (SSPKeys.Isremovepoison2(player) && toggleTimer == 0) {
@@ -108,6 +95,8 @@ public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IB
 				}
 			}
 		}
+		
+		
 		if (IC2.keyboard.isAltKeyDown(player) && IC2.keyboard.isHudModeKeyDown(player) && toggleTimer == 0) {
 			toggleTimer = 10;
 			if (hubmode == HudMode.getMaxMode()) {
@@ -125,9 +114,11 @@ public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IB
 			--toggleTimer;
 			nbtData.setByte(s, toggleTimer);
 		}
+		
 		if (Nightvision && IC2.platform.isSimulating() && ElectricItem.manager.use(stack, 1.0, player)) {
 			final BlockPos pos = new BlockPos((int) Math.floor(player.posX), (int) Math.floor(player.posY), (int) Math.floor(player.posZ));
 			final int skylight = player.getEntityWorld().getLightFromNeighbors(pos);
+		
 			if (Configs.canCraftDoubleSlabs) {
 				player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 300, 0, true, true));
 			} else {
@@ -135,17 +126,9 @@ public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IB
 		}
 	}
 
-	public static boolean switchJetpack(ItemStack stack) {
-		NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
-		boolean newMode;
-		nbt.setBoolean("isFlyActive", newMode = !nbt.getBoolean("isFlyActive"));
-		return newMode;
-	}
+	
 
-	public static boolean isJetpackOn(ItemStack stack) {
-		return StackUtil.getOrCreateNbtData(stack).getBoolean("isFlyActive");
-	}
-
+	
 	public float getBaseThrust(ItemStack stack, boolean hover) {
 		return hover ? 0.65F : 0.3F;
 	}
@@ -183,9 +166,7 @@ public class ItemAdvancedElectricJetpack extends ItemArmorElectric implements IB
 		return ElectricItem.manager.getCharge(stack) / getMaxCharge(stack);
 	}
 
-	public boolean isJetpackActive(ItemStack stack) {
-		return isJetpackOn(stack);
-	}
+	
 
 	public float getHoverMultiplier(ItemStack stack, boolean upwards) {
 		return 0.2F;

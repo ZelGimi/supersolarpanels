@@ -47,6 +47,8 @@ public class ItemUltDrill extends ItemDrill {
 
 	public ItemUltDrill() {
 		super(null, Configs.operationEnergyCost, HarvestLevel.Iridium, Configs.maxChargedrill, Configs.transferLimitdrill, Configs.tierdrill, DrillMode.NORMAL.drillSpeed);
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
+		
 		BlocksItems.registerItem((Item) this, SuperSolarPanels.getIdentifier(NAME)).setUnlocalizedName(NAME);
 	}
 

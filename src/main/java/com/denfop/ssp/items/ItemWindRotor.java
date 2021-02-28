@@ -48,7 +48,7 @@ public class ItemWindRotor extends ItemGradualInt implements IKineticRotor {
 		this.minWindStrength = minWindStrength;
 		this.maxWindStrength = maxWindStrength;
 		BlocksItems.registerItem((Item) this, SuperSolarPanels.getIdentifier(this.name = name)).setUnlocalizedName(name);
-
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 	}
 
 	@SideOnly(Side.CLIENT)

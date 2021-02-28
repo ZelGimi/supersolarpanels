@@ -30,10 +30,10 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 
 		switch (this.active) {
 			case DAY:
-				tryGenerateEnergy(this.dayPower);
+				tryGenerateEnergy((int) (this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay())));
 				break;
 			case NIGHT:
-				tryGenerateEnergy(this.nightPower);
+				tryGenerateEnergy((int) (this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight())));
 				break;
 
 		}
@@ -53,6 +53,12 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 			return (this.active == GenerationState.DAY);
 		if ("moonlight".equals(name))
 			return (this.active == GenerationState.NIGHT);
+		if ("module1".equals(name))
+			return (this.chargeSlots.module_generate_day() == true);
+		if ("module2".equals(name))
+			return (this.chargeSlots.module_generate_night() == true);
+		if ("module3".equals(name))
+			return (this.chargeSlots.module_storage() == true);
 		return super.getGuiState(name);
 	}
 
@@ -60,9 +66,9 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 	public String getOutput() {
 		switch (this.active) {
 			case DAY:
-				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.dayPower, 3), Localization.translate("ic2.generic.text.EUt"));
+				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay()), 3), Localization.translate("ic2.generic.text.EUt"));
 			case NIGHT:
-				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.nightPower, 3), Localization.translate("ic2.generic.text.EUt"));
+				return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.nightPower+((this.nightPower)*0.2*this.chargeSlots.GenNight()), 3), Localization.translate("ic2.generic.text.EUt"));
 		}
 		return String.format("%s 0 %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Localization.translate("ic2.generic.text.EUt"));
 	}

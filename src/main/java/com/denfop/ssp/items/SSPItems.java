@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 
 public enum SSPItems {
 	QUANTUM_LEGGINGS, QUANTUM_BOOSTS, CRAFTING, GRAVI_CHESTPLATE, ADVANCED_CRYSTAL, QUANTUM_SABER, SPECTRAL_SABER, QUANTUM_HELMET, TWELVE_HEAT_STORAGE, MAX_HEAT_STORAGE, PROTON_FUEL_ROD, QUAD_PROTON_FUEL_ROD, EIT_PROTON_FUEL_ROD, DUAL_PROTON_FUEL_ROD,
-	DRILL,
+	DRILL,module1,module2,module3,
 	IRIDIUM_ROTOR, COMPRESS_IRIDIUM_ROTOR, SPECTRAL;
 	//battery_su
 
@@ -52,6 +52,9 @@ public enum SSPItems {
 		IRIDIUM_ROTOR.setInstance(new ItemWindRotor("rotor_carbon1", Configs.iridiumRotorRadius, Configs.rotor_carbon1, Configs.coefficient, Configs.minWindStrength, Configs.maxWindStrength, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model1.png")));
 		COMPRESS_IRIDIUM_ROTOR.setInstance(new ItemWindRotor("rotor_carbon2", Configs.compressIridiumRotorRadius, Configs.rotor_carbon2, Configs.coefficient1, Configs.minWindStrength1, Configs.maxWindStrength1, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model2.png")));
 		SPECTRAL.setInstance(new ItemWindRotor("rotor_carbon3", Configs.spectralRotorRadius, Configs.rotor_carbon3, Configs.coefficient2, Configs.minWindStrength2, Configs.maxWindStrength2, SuperSolarPanels.getIdentifier("textures/items/carbon_rotor_model3.png")));
+	    module1.setInstance(new ItemModule("module1"));
+		module2.setInstance(new ItemModule("module2"));
+		module3.setInstance(new ItemModule("module3"));
 		if (side == Side.CLIENT)
 			doModelGuf();
 	}
@@ -87,8 +90,5 @@ public enum SSPItems {
 		throw new IllegalArgumentException("Not applicable");
 	}
 
-	public ItemStack getItemStack(CraftingTypes proton, int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

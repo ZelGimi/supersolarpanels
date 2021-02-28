@@ -46,7 +46,6 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
   private static final int StateRunning = 1;
   private static final int StateRunningScrap = 2;
   public final InvSlotUpgrade upgradeSlot;
-  public final InvSlotProcessable<IRecipeInput, Integer, ItemStack> amplifierSlot;
   public final InvSlotOutput outputSlot;
   public final InvSlotConsumableLiquid containerslot;
   @GuiSynced
@@ -67,15 +66,7 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
     this.state = 0;
     this.prevState = 0;
     this.redstonePowered = false;
-    this.amplifierSlot = new InvSlotProcessable<IRecipeInput, Integer, ItemStack>(this, "scrap", 1, Recipes.matterAmplifier) {
-      protected ItemStack getInput(ItemStack stack) {
-        return stack;
-      }
-
-      protected void setInput(ItemStack input) {
-        put(input);
-      }
-    };
+   
     this.outputSlot = new InvSlotOutput(this, "output", 1);
     this.containerslot = new InvSlotConsumableLiquidByList(this, "container", InvSlot.Access.I, 1, InvSlot.InvSide.TOP, InvSlotConsumableLiquid.OpType.Fill, FluidRegister.Neutron);
     this.upgradeSlot = new InvSlotUpgrade(this, "upgrade", 4);
@@ -83,10 +74,7 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
     this.redstone.subscribe(newLevel -> TileEntityMassFabricator.this.energy.setEnabled((newLevel == 0)));
     this.fluids = (Fluids) addComponent((TileEntityComponent) new Fluids(this));
     this.fluidTank = this.fluids.addTank("fluidTank", 10000, Fluids.fluidPredicate(FluidRegister.Neutron));
-    this.comparator.setUpdate(() -> {
-      int count = calcRedstoneFromInvSlots(this.amplifierSlot);
-      return (count > 0) ? count : ((this.scrap > 0) ? 1 : 0);
-    });
+   
   }
 
   public static void init() {
@@ -95,24 +83,13 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
     //addAmplifier(ItemName.crafting.getItemStack(CraftingItemType.scrap_box), 1, 45000);
   }
 
-  public static void addAmplifier(ItemStack input, int amount, int amplification) {
-    addAmplifier(Recipes.inputFactory.forStack(input, amount), amplification);
-  }
-
-  public static void addAmplifier(IRecipeInput input, int amplification) {
-    Recipes.matterAmplifier.addRecipe(input, amplification, null, false);
-  }
-
-  public static void addAmplifier(String input, int amount, int amplification) {
-    addAmplifier(Recipes.inputFactory.forOreDict(input, amount), amplification);
-  }
-
+ 
   public List<ItemStack> getWrenchDrops(World world, BlockPos blockPos, IBlockState iBlockState, TileEntity tileEntity, EntityPlayer entityPlayer, int i) {
     List<ItemStack> list = new ArrayList<>();
     outputSlot.forEach(list::add);
     upgradeSlot.forEach(list::add);
     containerslot.forEach(list::add);
-    amplifierSlot.forEach(list::add);
+  
 
     return list;
   }
@@ -201,13 +178,7 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
         setState(1);
       }
       setActive(true);
-      if (this.scrap < 10000) {
-        MachineRecipeResult<IRecipeInput, Integer, ItemStack> recipe = this.amplifierSlot.process();
-        if (recipe != null) {
-          this.amplifierSlot.consume(recipe);
-          this.scrap += recipe.getOutput();
-        }
-      }
+     
       if (this.energy.getEnergy() >= this.energy.getCapacity())
         needsInvUpdate = attemptGeneration();
       needsInvUpdate |= this.containerslot.processFromTank(this.fluidTank, this.outputSlot);
@@ -282,12 +253,7 @@ public class TileEntityMassFabricator extends TileEntityElectricMachine implemen
     return (ret > 2.147483647E9D) ? Integer.MAX_VALUE : (int) ret;
   }
 
-  public boolean amplificationIsAvailable() {
-    if (this.scrap > 0)
-      return true;
-    MachineRecipeResult<? extends IRecipeInput, ? extends Integer, ? extends ItemStack> recipe = this.amplifierSlot.process();
-    return (recipe != null && recipe.getOutput() > 0);
-  }
+
 
   public String getProgressAsString() {
     int p = (int) Math.min(100.0D * this.energy.getFillRatio(), 100.0D);

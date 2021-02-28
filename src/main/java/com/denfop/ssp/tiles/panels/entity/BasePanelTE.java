@@ -62,8 +62,9 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 		this.storage = 0;
 		this.maxStorage = config.maxStorage;
 		this.tier = config.tier;
-		this.chargeSlots = new InvSlotMultiCharge(this, tier, 4, InvSlot.Access.IO);
+		this.chargeSlots = new InvSlotMultiCharge(this, tier, 9, InvSlot.Access.IO);
 		this.tierPower = EnergyNet.instance.getPowerFromTier(tier);
+		
 	}
 
 	protected boolean canSeeSky(BlockPos up) {
@@ -73,10 +74,17 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	}
 
 	public void tryGenerateEnergy(int amount) {
-		if (this.storage + amount <= this.maxStorage) {
+		if(this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage() < 2000000000){
+		if (this.storage + amount <= (this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage())) {
 			this.storage += amount;
 		} else {
-			this.storage = this.maxStorage;
+			this.storage = (int) (this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage());
+		}}else {
+			if (this.storage + amount <= 1999999999) {
+				this.storage += amount;
+			} else {
+				this.storage =  1999999999;
+			}
 		}
 	}
 
@@ -104,6 +112,7 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		this.storage = nbt.getInteger("storage");
+		
 	}
 
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -167,12 +176,21 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	}
 
 	public String getStorage() {
-		return Util.toSiString(this.storage, 3) + "/" + Util.toSiString(this.maxStorage, 3) + "EU";
+		if(this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage() < 2000000000) {
+		return Util.toSiString(this.storage, 3) + "/" + Util.toSiString((this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage()), 3) + "EU";
+		}else {
+			return Util.toSiString(this.storage, 3) + "/" + Util.toSiString(1999999999, 3) + "EU";
+			
+		}
 	}
 
 	public double getGuiValue(String name) {
+		if(this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage() < 2000000000) {
 		if ("progress".equals(name))
-			return (double) this.storage / this.maxStorage;
+			return (double) this.storage / (this.maxStorage+ this.maxStorage*0.2*this.chargeSlots.storage());}else {
+				if ("progress".equals(name))
+					return (double) this.storage / 1999999999;
+			}
 		throw new IllegalArgumentException("Unexpected GUI value requested: " + name);
 	}
 

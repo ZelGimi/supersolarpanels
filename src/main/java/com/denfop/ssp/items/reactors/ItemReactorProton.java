@@ -1,6 +1,7 @@
 package com.denfop.ssp.items.reactors;
 
 
+import com.denfop.ssp.SuperSolarPanels;
 import com.denfop.ssp.common.Configs;
 import com.denfop.ssp.items.SSPItems;
 import com.denfop.ssp.items.resource.CraftingThings;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 public class ItemReactorProton extends ItemReactorUranium {
 	public ItemReactorProton(String name, int cells) {
 		super(name, cells, Configs.proton_fuel_rod);
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 
 	}
 

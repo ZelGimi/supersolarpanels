@@ -161,4 +161,7 @@ super_solar_panels.machines.quantum_solar_panelrain=Quantum Rain Panel
 super_solar_panels.machines.nutronfabricator=Neutron Particle Generator
 item.crafting.name=Crafting
 super_solar_panels.crafting.nanobox.name=Tool NanoBox
+super_solar_panels.module1=Module: Generation Day
+super_solar_panels.module2=Module: Generation Night
+super_solar_panels.module3=Module: Storage
 

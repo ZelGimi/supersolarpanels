@@ -1,18 +1,26 @@
 package com.denfop.ssp.items.tools;
 
+import com.denfop.ssp.SuperSolarPanels;
+import com.denfop.ssp.common.Constants;
 import com.denfop.ssp.items.itembase.ItemElectricTool;
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.audio.PositionSpec;
+import ic2.core.item.ItemIC2;
 import ic2.core.item.armor.ItemArmorNanoSuit;
 import ic2.core.item.armor.ItemArmorQuantumSuit;
 import ic2.core.item.tool.HarvestLevel;
 import ic2.core.item.tool.ToolClass;
+import ic2.core.ref.ItemName;
 import ic2.core.slot.ArmorSlot;
 import ic2.core.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -28,8 +36,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -51,8 +61,18 @@ public class ItemNanoSaber extends ItemElectricTool {
 		ItemElectricTool.tier = tier;
 		this.damage1 = damage1;
 		this.damage2 = damage2;
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 	}
-
+	@SideOnly(Side.CLIENT)
+	public void registerModels(String name) {
+		
+			 
+		 
+		
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(Constants.MOD_ID + ":" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name), null));
+	
+	}
+	
 	@Nonnull
 	public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
 		if (slot != EntityEquipmentSlot.MAINHAND)

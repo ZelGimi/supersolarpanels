@@ -1,5 +1,6 @@
 package com.denfop.ssp.items.armor;
 
+import com.denfop.ssp.SuperSolarPanels;
 import com.denfop.ssp.common.Configs;
 import com.denfop.ssp.common.Constants;
 import com.denfop.ssp.items.armorbase.ItemBoosts;
@@ -9,6 +10,7 @@ import ic2.api.item.HudMode;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.util.StackUtil;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -22,6 +24,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
+import org.lwjgl.input.Keyboard;
+
 public class ItemArmorQuantumBoosts extends ItemBoosts {
 	protected static final int DEFAULT_COLOUR = -1;
 
@@ -29,6 +33,7 @@ public class ItemArmorQuantumBoosts extends ItemBoosts {
 
 	public ItemArmorQuantumBoosts() {
 		super("graviBoosts", Configs.maxCharge3, Configs.transferLimit3, Configs.tier3);
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
@@ -48,21 +53,11 @@ public class ItemArmorQuantumBoosts extends ItemBoosts {
 			}
 			if (player.onGround != wasOnGround)
 				nbtData.setBoolean("wasOnGround", player.onGround);
-		} else {
-			if (ElectricItem.manager.canUse(stack, 4000.0D) && player.onGround)
-				this.jumpCharge = 1.0F;
-			if (player.motionY >= 0.0D && this.jumpCharge > 0.0F && !player.isInWater()) {
-				if (this.jumpCharge == 0.9F) {
-					player.motionX *= 1.0D;
-					player.motionZ *= 1.0D;
-				}
-				player.motionY += (this.jumpCharge * 0.3F);
-				this.jumpCharge = (float) (this.jumpCharge * 0.75D);
-			} else if (this.jumpCharge < 1.0F) {
-				this.jumpCharge = 0.0F;
-			}
+			
+		
 		}
-
+		
+		player.stepHeight = 1;
 		boolean Nightvision = nbtData.getBoolean("Nightvision");
 		short hubmode = nbtData.getShort("HudMode");
 		if (SSPKeys.Isremovepoison1(player) && toggleTimer == 0) {
@@ -147,9 +142,7 @@ public class ItemArmorQuantumBoosts extends ItemBoosts {
 		return 0.01F;
 	}
 
-	public boolean isJetpackActive(ItemStack stack) {
-		return (super.isJetpackActive(stack) && ElectricItem.manager.getCharge(stack) >= 10000.0D);
-	}
+	
 
 	public float getHoverMultiplier(ItemStack stack, boolean upwards) {
 		return 0.25F;

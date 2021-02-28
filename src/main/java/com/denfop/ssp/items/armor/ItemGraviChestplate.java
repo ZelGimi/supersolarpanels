@@ -1,10 +1,14 @@
 package com.denfop.ssp.items.armor;
 
+import com.denfop.ssp.SuperSolarPanels;
 import com.denfop.ssp.common.Configs;
 import com.denfop.ssp.common.Constants;
 import com.denfop.ssp.items.armorbase.ItemAdvancedElectricJetpack;
+import com.denfop.ssp.keyboard.SSPKeys;
+
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
+import ic2.core.util.StackUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -20,6 +24,7 @@ public class ItemGraviChestplate extends ItemAdvancedElectricJetpack {
 
 	public ItemGraviChestplate() {
 		super("graviChestplate", Configs.maxCharge6, Configs.transferLimit6, Configs.tier6);
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
@@ -34,6 +39,20 @@ public class ItemGraviChestplate extends ItemAdvancedElectricJetpack {
 	public void onArmorTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack stack) {
 		super.onArmorTick(world, player, stack);
 		player.extinguish();
+		NBTTagCompound nbtbase = SuperSolarPanels.getOrCreateNbtData1(player);
+		NBTTagCompound nbtData = StackUtil.getOrCreateNbtData(stack);
+		byte toggleTimer = nbtData.getByte("toggleTimer");
+		player.capabilities.allowFlying = true;
+		 player.capabilities.setFlySpeed((float) 0.15);
+		 player.capabilities.isFlying = true;
+		
+		
+		
+		if (IC2.platform.isSimulating() && toggleTimer > 0) {
+			final String s = "toggleTimer";
+			--toggleTimer;
+			nbtData.setByte(s, toggleTimer);
+		}
 	}
 
 	public float getBaseThrust(ItemStack stack, boolean hover) {
@@ -69,9 +88,7 @@ public class ItemGraviChestplate extends ItemAdvancedElectricJetpack {
 		return 0.01F;
 	}
 
-	public boolean isJetpackActive(ItemStack stack) {
-		return (super.isJetpackActive(stack) && ElectricItem.manager.getCharge(stack) >= 10000.0D);
-	}
+	
 
 	public float getHoverMultiplier(ItemStack stack, boolean upwards) {
 		return 0.25F;

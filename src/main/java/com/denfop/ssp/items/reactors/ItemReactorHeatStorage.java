@@ -23,6 +23,7 @@ public class ItemReactorHeatStorage extends AbstractDamageableReactorComponent {
 
 	public ItemReactorHeatStorage(String name, int heatStorage) {
 		super(null, heatStorage);
+		this.setCreativeTab(SuperSolarPanels.SSPTab);
 		BlocksItems.registerItem(this, SuperSolarPanels.getIdentifier(ItemReactorHeatStorage.name = name)).setUnlocalizedName(name);
 	}
 

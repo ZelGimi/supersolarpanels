@@ -25,7 +25,7 @@ public abstract class TileEntitySunPanel extends BasePanelTE {
 		super.updateEntityServer();
 
 		if (this.active == GenerationState.DAY) {
-			tryGenerateEnergy(this.dayPower);
+			tryGenerateEnergy((int) (this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay())));
 		}
 		if (this.storage > 0)
 			this.storage = (int) (this.storage - this.chargeSlots.charge(this.storage));
@@ -34,6 +34,8 @@ public abstract class TileEntitySunPanel extends BasePanelTE {
 	public boolean getGuiState(String name) {
 		if ("sunlight".equals(name))
 			return (this.active == GenerationState.DAY);
+		if ("module1".equals(name))
+			return (this.chargeSlots.module_generate_day() == true);
 
 		return super.getGuiState(name);
 	}
@@ -49,7 +51,7 @@ public abstract class TileEntitySunPanel extends BasePanelTE {
 	@Override
 	public String getOutput() {
 		if (this.active == GenerationState.DAY) {
-			return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.dayPower, 3), Localization.translate("ic2.generic.text.EUt"));
+			return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.dayPower+((this.dayPower)*0.2*this.chargeSlots.GenDay()), 3), Localization.translate("ic2.generic.text.EUt"));
 		}
 		return String.format("%s 0 %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Localization.translate("ic2.generic.text.EUt"));
 	}

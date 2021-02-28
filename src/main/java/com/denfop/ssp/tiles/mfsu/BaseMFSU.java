@@ -52,6 +52,7 @@ public abstract class BaseMFSU extends TileEntityInventory implements IEnergySto
 		this.dischargeSlot = new InvSlotDischarge(this, InvSlot.Access.IO, tier, InvSlot.InvSide.BOTTOM);
 		this.energy = addComponent((new Energy(this, capacity, EnumSet.complementOf(EnumSet.of(EnumFacing.DOWN)),
 				EnumSet.of(EnumFacing.DOWN), tier)).addManagedSlot(dischargeSlot));
+		
 	}
 
 	protected void updateEntityServer() {

@@ -30,7 +30,7 @@ public abstract class TileEntityRainPanel extends BasePanelTE {
 				tryGenerateEnergy(0);
 				break;
 			case RAIN:
-				tryGenerateEnergy(this.rainPower);
+				tryGenerateEnergy((int) (this.rainPower+((this.rainPower)*0.2*this.chargeSlots.GenDay())));
 				break;
 
 		}
@@ -57,7 +57,7 @@ public abstract class TileEntityRainPanel extends BasePanelTE {
 	@Override
 	public String getOutput() {
 		if (this.active == GenerationState.RAIN) {
-			return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Util.toSiString(this.rainPower, 3), Localization.translate("ic2.generic.text.EUt"));
+			return String.format("%s %s %s", Localization.translate(Constants.MOD_ID + ".gui.generating"),Util.toSiString(this.rainPower+((this.rainPower)*0.2*this.chargeSlots.GenDay()), 3), Localization.translate("ic2.generic.text.EUt"));
 		}
 		return String.format("%s 0 %s", Localization.translate(Constants.MOD_ID + ".gui.generating"), Localization.translate("ic2.generic.text.EUt"));
 	}

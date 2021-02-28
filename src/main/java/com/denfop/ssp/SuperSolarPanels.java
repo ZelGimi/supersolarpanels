@@ -3,6 +3,7 @@ package com.denfop.ssp;
 import com.denfop.ssp.common.Configs;
 import com.denfop.ssp.common.Constants;
 import com.denfop.ssp.common.SSPSourceTab;
+import com.denfop.ssp.events.EventHandler;
 import com.denfop.ssp.fluid.neutron.BlockRegister;
 import com.denfop.ssp.fluid.neutron.FluidRegister;
 import com.denfop.ssp.gui.ProgressBars;
@@ -16,12 +17,21 @@ import com.denfop.ssp.tiles.SSPBlock;
 import ic2.api.event.TeBlockFinalCallEvent;
 import ic2.core.block.BlockTileEntity;
 import ic2.core.block.TeBlockRegistry;
+import ic2.core.init.MainConfig;
+import ic2.core.util.Config;
+import ic2.core.util.ConfigUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderExceptionModCrash;
 import net.minecraftforge.fml.common.Mod;
@@ -74,7 +84,7 @@ public final class SuperSolarPanels {
 		proxy.preInit(event);
 		SuperSolarPanels.log = event.getModLog();
 		Configs.loadConfig(event.getSuggestedConfigurationFile(), event.getSide().isClient());
-		SuperSolarPanels.machines = TeBlockRegistry.get(SSPBlock.IDENTITY);
+		SuperSolarPanels.machines = (BlockTileEntity) TeBlockRegistry.get(SSPBlock.IDENTITY).setCreativeTab(SSPTab);
 		if (event.getSide().isClient())
 			setupRenderingGuf();
 		SSPItems.buildItems(event.getSide());
@@ -97,7 +107,7 @@ public final class SuperSolarPanels {
 
 		OreDictionary.registerOre("craftingSunnariumPart", SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM_PART));
 		OreDictionary.registerOre("craftingSunnarium", SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM));
-
+		
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -110,16 +120,58 @@ public final class SuperSolarPanels {
 	public void init(final FMLInitializationEvent event) {
 		proxy.init(event);
 		SSPBlock.buildDummies();
+		
 		SPPRecipes.addCraftingRecipes();
 		ProgressBars.addStyles();
 		TileEntityMolecularAssembler.MolecularOutput.registerNetwork();
-	}
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 
+		
+	}
+	private static Config config;
 	@Mod.EventHandler
 	public void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-	}
+		 
+			}
+	 
+    public static NBTTagCompound getOrCreateNbtData(final ItemStack itemstack) {
+        NBTTagCompound nbttagcompound = itemstack.getTagCompound();
+        if (nbttagcompound == null) {
+            nbttagcompound = new NBTTagCompound();
+            itemstack.setTagCompound(nbttagcompound);
+            nbttagcompound.setInteger("charge", 0);
+            nbttagcompound.setInteger("Fly", 0);
+            nbttagcompound.setInteger("solarType", 0);
+            nbttagcompound.setInteger("energy", 0);
+            nbttagcompound.setInteger("energy2", 0);
+            nbttagcompound.setBoolean("isFlyActive", false);
+            nbttagcompound.setBoolean("EnableWirelles", false);
+            nbttagcompound.setInteger("World", 0);
+            nbttagcompound.setInteger("Xcoord", 0);
+            nbttagcompound.setInteger("Ycoord", 0);
+            nbttagcompound.setInteger("Zcoord", 0);
+            nbttagcompound.setInteger("tier", 0);
+            nbttagcompound.setString("Name", "Name electical block");
+            
+        }
+        return nbttagcompound;
+    }
+   
+    public static NBTTagCompound getOrCreateNbtData1(final EntityPlayer player) {
+        NBTTagCompound nbttagcompound = player.getEntityData();
 
+        if (nbttagcompound == null) {
+            nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setBoolean("isFlyActive", false);
+            nbttagcompound.setBoolean("isNightVision", false);
+            nbttagcompound.setBoolean("isEffect", false);
+            nbttagcompound.setBoolean("isEffect1", false);
+            nbttagcompound.setBoolean("isEffect2", false);
+            nbttagcompound.setBoolean("isEffect3", false);
+        }
+        return nbttagcompound;
+    }
 	@Mod.EventHandler
 	public void init(final FMLFingerprintViolationEvent event) {
 		java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,

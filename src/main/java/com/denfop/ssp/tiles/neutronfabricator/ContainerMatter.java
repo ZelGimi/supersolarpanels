@@ -9,7 +9,6 @@ import java.util.List;
 public class ContainerMatter extends ContainerFullInv<TileEntityMassFabricator> {
 	public ContainerMatter(EntityPlayer player, TileEntityMassFabricator tileEntity) {
 		super(player, tileEntity, 166);
-		addSlotToContainer(new SlotInvSlot(tileEntity.amplifierSlot, 0, 72, 40));
 		addSlotToContainer(new SlotInvSlot(tileEntity.outputSlot, 0, 125, 59));
 		addSlotToContainer(new SlotInvSlot(tileEntity.containerslot, 0, 125, 23));
 		for (int i = 0; i < 4; i++)

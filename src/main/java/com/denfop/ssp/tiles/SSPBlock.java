@@ -82,13 +82,17 @@ public enum SSPBlock implements ITeBlock {
 
 	SSPBlock(final Class<? extends TileEntityBlock> teClass, final int itemMeta) {
 		this(teClass, itemMeta, EnumRarity.UNCOMMON);
+		
 	}
 
 	SSPBlock(final Class<? extends TileEntityBlock> teClass, final int itemMeta, final EnumRarity rarity) {
 		this.teClass = teClass;
 		this.itemMeta = itemMeta;
 		this.rarity = rarity;
+		
 		GameRegistry.registerTileEntity(teClass, SuperSolarPanels.getIdentifier(this.getName()));
+		
+	
 	}
 
 	@Override
@@ -100,7 +104,7 @@ public enum SSPBlock implements ITeBlock {
 	public int getId() {
 		return this.itemMeta;
 	}
-
+	
 	public static void buildDummies() {
 		final ModContainer mc = Loader.instance().activeModContainer();
 		if (mc == null || !Constants.MOD_ID.equals(mc.getModId())) {

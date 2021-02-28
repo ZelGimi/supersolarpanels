@@ -24,10 +24,7 @@ public class GuiMatter extends GuiIC2<ContainerMatter> {
 		super.drawForegroundLayer(mouseX, mouseY);
 		this.fontRenderer.drawString(this.progressLabel, 8, 22, 4210752);
 		this.fontRenderer.drawString(this.container.base.getProgressAsString(), 18, 31, 4210752);
-		if (this.container.base.scrap > 0) {
-			this.fontRenderer.drawString(this.amplifierLabel, 8, 46, 4210752);
-			this.fontRenderer.drawString("" + this.container.base.scrap, 8, 58, 4210752);
-		}
+	
 	}
 
 	public ResourceLocation getTexture() {

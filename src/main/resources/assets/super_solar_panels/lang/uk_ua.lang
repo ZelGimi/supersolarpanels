@@ -156,4 +156,7 @@ super_solar_panels.crafting.nightlinse=Тіньова Лінза
 super_solar_panels.crafting.rainlinse=Дощова Лінза
 super_solar_panels.crafting.nanobox=Нано ящик для інструментів
 item.crafting.name=Крафтування
+super_solar_panels.module1=Модуль: Генерація Днем
+super_solar_panels.module2=Модуль: Генерація Вночі
+super_solar_panels.module3=Модуль: Зберігання
 
