@@ -10,12 +10,15 @@ import com.denfop.ssp.tiles.neutronfabricator.TileEntityMassFabricator;
 import com.denfop.ssp.tiles.panels.overtime.*;
 import com.denfop.ssp.tiles.panels.rain.*;
 import com.denfop.ssp.tiles.panels.sun.*;
+import com.denfop.ssp.tiles.panels.moon.*;
 import com.denfop.ssp.tiles.transformer.*;
 import ic2.core.block.ITeBlock;
 import ic2.core.block.TileEntityBlock;
 import ic2.core.ref.TeBlock;
 import ic2.core.util.Util;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -69,7 +72,18 @@ public enum SSPBlock implements ITeBlock {
 	neutronium_solar_panelrain(TileEntityNeutronRain.class, 44, EnumRarity.EPIC),
 	advancedmfsu(AdvancedMFSU.class, 45, EnumRarity.EPIC),
 	ultimatemfsu(UltimateMFSU.class, 46, EnumRarity.EPIC),
-	quantummfsu(QuantumMFSU.class, 47, EnumRarity.EPIC);
+	
+	quantummfsu(QuantumMFSU.class, 47, EnumRarity.EPIC),
+	advanced_solar_panelnight(TileEntityAdvancedMoon.class, 51),
+	hybrid_solar_panelnight(TileEntityHybridMoon.class, 52, EnumRarity.RARE),
+	ultimate_solar_panelnight(TileEntityUltimateHybridMoon.class, 53, EnumRarity.EPIC),
+	quantum_solar_panelnight(TileEntityQuantumMoon.class, 54, EnumRarity.EPIC),
+	spectral_solar_panelnight(TileEntitySpectralMoon.class, 55),
+	proton_solar_panelnight(TileEntityProtonMoon.class, 56, EnumRarity.EPIC),
+	singular_solar_panelnight(TileEntitySingularMoon.class, 57, EnumRarity.RARE),
+	admin_solar_panelnight(TileEntityAdminMoon.class, 58, EnumRarity.EPIC),
+	photonic_solar_panelnight(TileEntityPhotonicMoon.class, 59, EnumRarity.EPIC),
+	neutronium_solar_panelnight(TileEntityNeutronMoon.class, 60, EnumRarity.EPIC);
 
 	//
 	public static final ResourceLocation IDENTITY = SuperSolarPanels.getIdentifier("machines");
@@ -89,11 +103,17 @@ public enum SSPBlock implements ITeBlock {
 		this.teClass = teClass;
 		this.itemMeta = itemMeta;
 		this.rarity = rarity;
-		
+		 this.setCreativeTab(SuperSolarPanels.SSPTab);
 		GameRegistry.registerTileEntity(teClass, SuperSolarPanels.getIdentifier(this.getName()));
 		
 	
 	}
+	private CreativeTabs tabToDisplayOn;
+	public SSPBlock setCreativeTab(CreativeTabs tab)
+    {
+        this.tabToDisplayOn = tab;
+        return this;
+    }
 
 	@Override
 	public String getName() {

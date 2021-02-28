@@ -228,7 +228,7 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	public abstract String getOutput();
 
 	public enum GenerationState {
-		NONE, NIGHT, DAY, RAIN
+		NONE, NIGHT, DAY, RAIN,NIGHTRAIN,DAYRAIN
 	}
 
 	public static class SolarConfig {

@@ -13,17 +13,20 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import java.util.Random;
 
 public class SSPWorldDecorator implements IWorldGenerator {
-	private final WorldGenerator iridiumOre, platinumOre;
+	private final WorldGenerator iridiumOre, platinumOre, toriyOre;
 
 	public SSPWorldDecorator() {
 		iridiumOre = new WorldGenMinable(BlocksRegister.iridiumOre.getDefaultState(), 5, BlockMatcher.forBlock(Blocks.STONE));
 		platinumOre = new WorldGenMinable(BlocksRegister.platiumOre.getDefaultState(), 5, BlockMatcher.forBlock(Blocks.STONE));
+		toriyOre = new WorldGenMinable(BlocksRegister.toriyore.getDefaultState(), 5, BlockMatcher.forBlock(Blocks.STONE));
+		
 	}
 
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 		if (world.provider.getDimension() != 0) return;
 		runGenerator(iridiumOre, world, random, chunkX, chunkZ, 4, 5, 30);
 		runGenerator(platinumOre, world, random, chunkX, chunkZ, 4, 5, 30);
+		runGenerator(toriyOre, world, random, chunkX, chunkZ, 10, 5, 60);
 	}
 
 	// IBlockState blockToGen, int blockAmount, Predicate<IBlockState> blockToReplace, World world, Random rand, int chunk_X, int chunk_Z) {
