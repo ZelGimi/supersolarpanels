@@ -37,7 +37,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_IRON_PLATE), "III", "IPI", "III",
 
 				'I', "plateIron",
-				'P', "ingotIridium");
+				'P', input.forOreDict("ingotIridium"));
 		//
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.ultimate_core), "IPI",
 
@@ -47,7 +47,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.advanced_core), "IPI",
 
 				'I', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM),
-				'P', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
+				'P', input.forOreDict("ingotUranium"));
 		//
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.hybrid_core), "IPI",
 
@@ -86,7 +86,7 @@ public final class SPPRecipes {
 
 				'P', IC2Items.getItem("crafting", "carbon_plate"),
 				'L', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.hybrid_core),
-				'I', IC2Items.getItem("crafting", "iridium"),
+				'I', input.forOreDict("ingotIridium"),
 				'A',
 				SuperSolarPanels.machines.getItemStack(SSPBlock.advanced_solar_panel),
 				'C', IC2Items.getItem("crafting", "advanced_circuit"),
@@ -114,7 +114,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRRADIANT_URANIUM), " G ", "GUG", " G ",
 
 				'G', Items.GLOWSTONE_DUST,
-				'U', "ingotUranium");
+				'U', input.forOreDict("ingotUranium"));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRRADIANT_GLASS_PANE), "GGG", "UDU", "GGG",
 
 				'G', IC2Items.getItem("glass", "reinforced"),
@@ -130,7 +130,7 @@ public final class SPPRecipes {
 				'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM_ALLOY));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM_ALLOY), "III", "ISI", "III",
 
-				'I', IC2Items.getItem("crafting", "iridium"),
+				'I', input.forOreDict("ingotIridium"),
 				'S', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.SUNNARIUM), "SSS", "SSS", "SSS",
 
@@ -141,7 +141,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panel), " B ", "BAB", " B ", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.singularcore), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.proton_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panel), " B ", "BAB", " B ", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore2), 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.singular_solar_panel));
 		addShapedRecipe(SuperSolarPanels.machines.getItemStack(SSPBlock.photonic_solar_panel), " B ", "BAB", " B ", 'B', SuperSolarPanels.machines.getItemStack(SSPBlock.admin_solar_panel), 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore1));
-		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.singularcore), "ABA", "DCD", "ABA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.enderquantumcomponent), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy_ingot), 'B', IC2Items.getItem("crafting", "iridium"), 'D', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.ENRICHED_SUNNARIUM_ALLOY));
+		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.singularcore), "ABA", "DCD", "ABA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.enderquantumcomponent), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy_ingot), 'B', input.forOreDict("ingotIridium"), 'D', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.ENRICHED_SUNNARIUM_ALLOY));
 		addCompressorRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy_ingot));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.spectralcore), "CBC", "BAB", "CBC", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QUANTUM_CORE), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.photoniy), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.solarsplitter));
 		addShapedRecipe(new ItemStack(SSPItems.GRAVI_CHESTPLATE.getInstance()), "CBC", "CAC", " H ", 'A', IC2Items.getItem("quantum_chestplate"), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3), 'H', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5));
@@ -164,7 +164,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore1), "ABA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.EnrichedSunnariumAlloy2), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore2));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nanobox), "ACA", "CBC", "ACA", 'A', IC2Items.getItem("crafting", "carbon_plate"), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_IRON_PLATE), 'C', IC2Items.getItem("crafting", "alloy"));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore1), "ABA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.EnrichedSunnariumAlloy2), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore2));
-		addCompressorRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2));
+		addCompressorRecipe( input.forOreDict("ingotIridium", 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2));
 		addCompressorRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems4));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6), " A ", "ABA", " A ", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.nanobox), 'B', IC2Items.getItem("crafting", "advanced_circuit"));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("dust", "energium"), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.dust));
@@ -185,7 +185,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5), "ACA", "CBC", "ACA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2));
 
 		
-		addCompressorRecipe(input.forStack(IC2Items.getItem("misc_resource", "iridium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
+		addCompressorRecipe(input.forOreDict("iridiumOre"), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
 		addExtrudingRecipe(input.forStack(IC2Items.getItem("crafting", "iridium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("resource", "uranium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("crushed", "uranium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
