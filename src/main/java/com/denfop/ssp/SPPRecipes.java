@@ -185,8 +185,7 @@ public final class SPPRecipes {
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5), "ACA", "CBC", "ACA", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems3), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems2));
 
 		
-		addCompressorRecipe(input.forOreDict("iridiumOre"), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
-		addExtrudingRecipe(input.forStack(IC2Items.getItem("crafting", "iridium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
+		addCompressorRecipe(input.forStack(IC2Items.getItem("misc_resource", "iridium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.IRIDIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("resource", "uranium_ore")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("crushed", "uranium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("purified", "uranium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.URANIUM_INGOT));
@@ -194,7 +193,7 @@ public final class SPPRecipes {
 //
 		addCompressorRecipe(input.forStack(IC2Items.getItem("crafting", "carbon_plate"), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.compresscarbon));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("crafting", "alloy"), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.compresscarbonultra));
-		addExtrudingRecipe(input.forStack(IC2Items.getItem("crafting", "coal_chunk"), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.coal_chunk));
+		addCompressorRecipe(input.forStack(IC2Items.getItem("crafting", "coal_chunk"), 9), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.coal_chunk));
 		addCompressorRecipe(input.forStack(IC2Items.getItem("nuclear", "plutonium")), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protonshard));
 		addCompressorRecipe(input.forStack(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protonshard), 18), SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton));
 		addShapedRecipe(SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protoncore), " B ", "ACA", " B ", 'A', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.proton), 'B', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.EnrichedSunnariumAlloy4), 'C', SSPItems.CRAFTING.getItemStack(CraftingThings.CraftingTypes.spectralcore));
