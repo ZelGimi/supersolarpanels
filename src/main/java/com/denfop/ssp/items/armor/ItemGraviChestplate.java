@@ -43,7 +43,7 @@ public class ItemGraviChestplate extends ItemAdvancedElectricJetpack {
 		NBTTagCompound nbtData = StackUtil.getOrCreateNbtData(stack);
 		byte toggleTimer = nbtData.getByte("toggleTimer");
 		player.capabilities.allowFlying = true;
-		 player.capabilities.setFlySpeed((float) 0.15);
+		
 		 player.capabilities.isFlying = true;
 		
 		
