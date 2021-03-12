@@ -1,15 +1,9 @@
 package com.Denfop.tiles.base;
 
-import java.util.List;
-import java.util.Random;
-
 import com.Denfop.api.inv.IInvSlotProcessableMulti;
-import com.Denfop.container.ContainerMultiMachine;
 import com.Denfop.container.ContainerMultiMachine1;
-import com.Denfop.gui.GuiMultiMachine;
 import com.Denfop.gui.GuiMultiMachine1;
 import com.Denfop.tiles.Mechanism.EnumMultiMachine;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.network.INetworkTileEntityEventListener;
@@ -21,311 +15,306 @@ import ic2.core.audio.AudioSource;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotUpgrade;
 import ic2.core.block.machine.tileentity.TileEntityElectricMachine;
-import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
-import ic2.core.item.ItemUpgradeModule;
 import ic2.core.network.NetworkManager;
 import ic2.core.upgrade.IUpgradableBlock;
 import ic2.core.upgrade.IUpgradeItem;
-import ic2.core.upgrade.UpgradeRegistry;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.List;
+
 public abstract class TileEntityMultiMachine1 extends TileEntityElectricMachine implements IHasGui, INetworkTileEntityEventListener, IUpgradableBlock {
-	protected short[] progress;
-	protected double[] guiProgress;
+    public final int defaultTier, defaultEnergyStorage, defaultOperationsPerTick, defaultEnergyConsume;
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public final InvSlotOutput outputSlots;
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public final InvSlotUpgrade upgradeSlot;
+    public int expstorage = 0;
+    public int operationLength, operationsPerTick, sizeWorkingSlot, energyConsume;
 
-	public final int defaultTier, defaultEnergyStorage, defaultOperationsPerTick, defaultEnergyConsume;
-public int expstorage = 0;
-	public int operationLength, operationsPerTick, sizeWorkingSlot, energyConsume;
+    public AudioSource audioSource;
 
-	public AudioSource audioSource;
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public IInvSlotProcessableMulti inputSlots;
+    public int expmaxstorage;
+    protected short[] progress;
+    protected double[] guiProgress;
 
-	/**
-	 * Инвентарь слотов для обработки и поиска крафтов в заданих слотах
-	 */
-	public IInvSlotProcessableMulti inputSlots;
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ TileEntity пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1
+     */
+    public TileEntityMultiMachine1() {
+        this(1);
+    }
 
-	/**
-	 * Инвентарь выходних слотов
-	 */
-	public final InvSlotOutput outputSlots;
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ TileEntity пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public TileEntityMultiMachine1(int aDefaultTier) {
+        super(1, 1, 1);
+        this.sizeWorkingSlot = getMachine().sizeWorkingSlot;
+        this.progress = new short[sizeWorkingSlot];
+        this.guiProgress = new double[sizeWorkingSlot];
+        this.defaultEnergyConsume = getMachine().usagePerTick;
+        this.defaultOperationsPerTick = getMachine().lenghtOperation;
+        this.defaultTier = aDefaultTier;
+        this.defaultEnergyStorage = energyConsume * operationLength;
+        this.outputSlots = new InvSlotOutput(this, "output", 1, sizeWorkingSlot);
+        this.upgradeSlot = new InvSlotUpgrade(this, "upgrade", 4, 4);
+        this.maxEnergy = energyConsume * defaultOperationsPerTick;
+        this.expmaxstorage = 500;
+    }
 
-	/**
-	 * Инвентарь улучшений механизма
-	 */
-	public final InvSlotUpgrade upgradeSlot;
-	public int expmaxstorage;
+    public static int recycleChance() {
+        return 8;
+    }
 
-	/**
-	 * Конструктор обычного мульти слотного TileEntity с дефолтним значением уровня
-	 * приема энергии 1
-	 */
-	public TileEntityMultiMachine1() {
-		this(1);
-	}
+    public static int applyModifier(int base, int extra, double multiplier) {
+        double ret = Math.round((base + extra) * multiplier);
+        return (ret > 2.147483647E9D) ? Integer.MAX_VALUE : (int) ret;
+    }
 
-	/**
-	 * Конструктор обычного мульти слотного TileEntity с указанием уровня дефолтного
-	 * уровня приема энергии
-	 */
-	public TileEntityMultiMachine1(int aDefaultTier) {
-		super(1, 1, 1);
-		this.sizeWorkingSlot = getMachine().sizeWorkingSlot;
-		this.progress = new short[sizeWorkingSlot];
-		this.guiProgress = new double[sizeWorkingSlot];
-		this.defaultEnergyConsume = getMachine().usagePerTick;
-		this.defaultOperationsPerTick = getMachine().lenghtOperation;
-		this.defaultTier = aDefaultTier;
-		this.defaultEnergyStorage = energyConsume * operationLength;
-		this.outputSlots = new InvSlotOutput(this, "output", 1, sizeWorkingSlot);
-		this.upgradeSlot = new InvSlotUpgrade(this, "upgrade", 4, 4);
-		this.maxEnergy = energyConsume * defaultOperationsPerTick;
-		this.expmaxstorage = 500;
-	}
-	
-	protected abstract EnumMultiMachine getMachine();
+    protected abstract EnumMultiMachine getMachine();
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		for (int i = 0; i < sizeWorkingSlot; i++) {
-			this.progress[i] = nbttagcompound.getShort("progress" + i);
-		}
-		this.expstorage = nbttagcompound.getInteger("expstorage");
-	}
+    public void readFromNBT(NBTTagCompound nbttagcompound) {
+        super.readFromNBT(nbttagcompound);
+        for (int i = 0; i < sizeWorkingSlot; i++) {
+            this.progress[i] = nbttagcompound.getShort("progress" + i);
+        }
+        this.expstorage = nbttagcompound.getInteger("expstorage");
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		for (int i = 0; i < sizeWorkingSlot; i++) {
-			nbttagcompound.setShort("progress" + i, progress[i]);
-		}
-		nbttagcompound.setInteger("expstorage", this.expstorage);
-	}
+    public void writeToNBT(NBTTagCompound nbttagcompound) {
+        super.writeToNBT(nbttagcompound);
+        for (int i = 0; i < sizeWorkingSlot; i++) {
+            nbttagcompound.setShort("progress" + i, progress[i]);
+        }
+        nbttagcompound.setInteger("expstorage", this.expstorage);
+    }
 
-	/**
-	 * Получить текущий прогресс для отображение в GUI
-	 * 
-	 * @param slotId
-	 * @return
-	 */
-	public double getProgress(int slotId) {
-		return this.guiProgress[slotId];
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ GUI
+     *
+     * @param slotId
+     * @return
+     */
+    public double getProgress(int slotId) {
+        return this.guiProgress[slotId];
+    }
 
-	public void onLoaded() {
-		super.onLoaded();
-		if (IC2.platform.isSimulating())
-			setOverclockRates();
-	}
+    public void onLoaded() {
+        super.onLoaded();
+        if (IC2.platform.isSimulating())
+            setOverclockRates();
+    }
 
-	public void onUnloaded() {
-		super.onUnloaded();
-		if (IC2.platform.isRendering() && this.audioSource != null) {
-			IC2.audioManager.removeSources(this);
-			this.audioSource = null;
-		}
-	}
+    public void onUnloaded() {
+        super.onUnloaded();
+        if (IC2.platform.isRendering() && this.audioSource != null) {
+            IC2.audioManager.removeSources(this);
+            this.audioSource = null;
+        }
+    }
 
-	public void markDirty() {
-		super.markDirty();
-		if (IC2.platform.isSimulating())
-			setOverclockRates();
-	}
+    public void markDirty() {
+        super.markDirty();
+        if (IC2.platform.isSimulating())
+            setOverclockRates();
+    }
 
-	protected void updateEntityServer() {
-		super.updateEntityServer();
-		boolean needsInvUpdate = false;
-		boolean isActive = false;
-		for (int i = 0; i < sizeWorkingSlot; i++) {
-			RecipeOutput output = getOutput(i);
-			if (output != null && useEnergy((this.energyConsume + this.upgradeSlot.extraEnergyDemand) * this.upgradeSlot.energyDemandMultiplier)) {
-				isActive = true;
-				if (this.progress[i] == 0)
-					initiate(0);
+    protected void updateEntityServer() {
+        super.updateEntityServer();
+        boolean needsInvUpdate = false;
+        boolean isActive = false;
+        for (int i = 0; i < sizeWorkingSlot; i++) {
+            RecipeOutput output = getOutput(i);
+            if (output != null && useEnergy((this.energyConsume + this.upgradeSlot.extraEnergyDemand) * this.upgradeSlot.energyDemandMultiplier)) {
+                isActive = true;
+                if (this.progress[i] == 0)
+                    initiate(0);
 
-				this.progress[i]++;
-				this.guiProgress[i] = (double) ((double) this.progress[i] / this.operationLength);
+                this.progress[i]++;
+                this.guiProgress[i] = (double) this.progress[i] / this.operationLength;
 
-				if (this.progress[i] >= this.operationLength) {
-					this.guiProgress[i] = 0;
-					this.progress[i] = 0;
-					
-					
-				
-				
-				
-					operate(i, output);
-					needsInvUpdate = true;
-					initiate(2);
-				}
+                if (this.progress[i] >= this.operationLength) {
+                    this.guiProgress[i] = 0;
+                    this.progress[i] = 0;
 
-			} else {
-				if (this.progress[i] != 0 && getActive())
-					initiate(1);
-				if (output == null)
-					this.progress[i] = 0;
-			}
-		}
-		
-		if (getActive() != isActive) {
-			setActive(isActive);
-		}
 
-		for (int i = 0; i < this.upgradeSlot.size(); i++) {
-			ItemStack stack = this.upgradeSlot.get(i);
-			if (stack != null && stack.getItem() instanceof IUpgradeItem)
-				if (((IUpgradeItem) stack.getItem()).onTick(stack, this))
-					needsInvUpdate = true;
-		}
+                    operate(i, output);
+                    needsInvUpdate = true;
+                    initiate(2);
+                }
 
-		if (needsInvUpdate)
-			super.markDirty();
+            } else {
+                if (this.progress[i] != 0 && getActive())
+                    initiate(1);
+                if (output == null)
+                    this.progress[i] = 0;
+            }
+        }
 
-	}
+        if (getActive() != isActive) {
+            setActive(isActive);
+        }
 
-	private void initiate(int soundEvent) {
-		((NetworkManager) IC2.network.get()).initiateTileEntityEvent((TileEntity) this, soundEvent, true);
-	}
+        for (int i = 0; i < this.upgradeSlot.size(); i++) {
+            ItemStack stack = this.upgradeSlot.get(i);
+            if (stack != null && stack.getItem() instanceof IUpgradeItem)
+                if (((IUpgradeItem) stack.getItem()).onTick(stack, this))
+                    needsInvUpdate = true;
+        }
 
-	public void setOverclockRates() {
-		double stackOpLen = (this.defaultOperationsPerTick + this.upgradeSlot.extraProcessTime) * 64.0D * this.upgradeSlot.processTimeMultiplier;
-		this.operationsPerTick = (int) Math.min(Math.ceil(64.0D / stackOpLen), 2.147483647E9D);
-		this.operationLength = (int) Math.max(Math.round(stackOpLen * this.operationsPerTick / 64.0D), 1);
-		this.energyConsume = applyModifier(this.defaultEnergyConsume, this.upgradeSlot.extraEnergyDemand, this.upgradeSlot.energyDemandMultiplier);
-		this.setTier(applyModifier(this.defaultTier, this.upgradeSlot.extraTier, 1.0D));
-		this.maxEnergy = applyModifier(this.defaultEnergyStorage, this.upgradeSlot.extraEnergyStorage + this.operationLength * this.energyConsume, this.upgradeSlot.energyStorageMultiplier);
-	}
+        if (needsInvUpdate)
+            super.markDirty();
 
-	/**
-	 * Осуществляет последный тик крафта, для выдачи процесса крафта
-	 * 
-	 * @param slotId какой слот производит крафт
-	 * @param output выход крафта
-	 */
-	public void operate(int slotId, RecipeOutput output) {
-		for (int i = 0; i < this.operationsPerTick; i++) {
-			operateOnce(slotId, output.items);
+    }
 
-			output = getOutput(slotId);
-			if (output == null)
-				break;
-		}
-	}
+    private void initiate(int soundEvent) {
+        IC2.network.get().initiateTileEntityEvent(this, soundEvent, true);
+    }
 
-	/**
-	 * Последная операция по выдачи предмета
-	 * 
-	 * @param slotId        какой слот производит крафт
-	 * @param processResult список предметов результата
-	 */
-	public void operateOnce(int slotId, List<ItemStack> processResult) {
-		this.inputSlots.consume(slotId);
-		 if (IC2.random.nextInt(recycleChance()) == 0)
-		this.outputSlots.add(processResult);
-	}
-	 public static int recycleChance() {
-		    return 8;
-		  }
-	/**
-	 * Возращает крафт если в слотах ожидания есть нужный предмет
-	 * 
-	 * @param slotId какой слот проверяется
-	 * @return object
-	 */
-	
-	public RecipeOutput getOutput(int slotId) {
-		if (this.inputSlots.isEmpty(slotId))
-			return null;
-		RecipeOutput output = this.inputSlots.process(slotId);
-		if (output == null)
-			return null;
-		if (this.outputSlots.canAdd(output.items))
-			return output;
+    public void setOverclockRates() {
+        double stackOpLen = (this.defaultOperationsPerTick + this.upgradeSlot.extraProcessTime) * 64.0D * this.upgradeSlot.processTimeMultiplier;
+        this.operationsPerTick = (int) Math.min(Math.ceil(64.0D / stackOpLen), 2.147483647E9D);
+        this.operationLength = (int) Math.max(Math.round(stackOpLen * this.operationsPerTick / 64.0D), 1);
+        this.energyConsume = applyModifier(this.defaultEnergyConsume, this.upgradeSlot.extraEnergyDemand, this.upgradeSlot.energyDemandMultiplier);
+        this.setTier(applyModifier(this.defaultTier, this.upgradeSlot.extraTier, 1.0D));
+        this.maxEnergy = applyModifier(this.defaultEnergyStorage, this.upgradeSlot.extraEnergyStorage + this.operationLength * this.energyConsume, this.upgradeSlot.energyStorageMultiplier);
+    }
 
-		return null;
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     *
+     * @param slotId пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+     * @param output пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public void operate(int slotId, RecipeOutput output) {
+        for (int i = 0; i < this.operationsPerTick; i++) {
+            operateOnce(slotId, output.items);
 
-	public abstract String getInventoryName();
+            output = getOutput(slotId);
+            if (output == null)
+                break;
+        }
+    }
 
-	public ContainerBase<? extends TileEntityMultiMachine1> getGuiContainer(EntityPlayer entityPlayer) {
-		return new ContainerMultiMachine1(entityPlayer, this, this.sizeWorkingSlot);
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     *
+     * @param slotId        пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+     * @param processResult пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public void operateOnce(int slotId, List<ItemStack> processResult) {
+        this.inputSlots.consume(slotId);
+        if (IC2.random.nextInt(recycleChance()) == 0)
+            this.outputSlots.add(processResult);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public GuiScreen getGui(EntityPlayer entityPlayer, boolean isAdmin) {
-		return new GuiMultiMachine1(new ContainerMultiMachine1(entityPlayer, this, sizeWorkingSlot));
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     *
+     * @param slotId пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     * @return object
+     */
 
-	/**
-	 * Название звука старта/работы машинки
-	 * 
-	 * @return
-	 */
-	public String getStartSoundFile() {
-		return null;
-	}
+    public RecipeOutput getOutput(int slotId) {
+        if (this.inputSlots.isEmpty(slotId))
+            return null;
+        RecipeOutput output = this.inputSlots.process(slotId);
+        if (output == null)
+            return null;
+        if (this.outputSlots.canAdd(output.items))
+            return output;
 
-	/**
-	 * Название звука ошибки машинки (Например: кто-то забрал из входного слота
-	 * предметы, а производился процесс)
-	 * 
-	 * @return
-	 */
-	public String getInterruptSoundFile() {
-		return null;
-	}
+        return null;
+    }
 
-	public void onNetworkEvent(int event) {
-		if (this.audioSource == null && getStartSoundFile() != null)
-			this.audioSource = IC2.audioManager.createSource(this, getStartSoundFile());
-		switch (event) {
-		case 0:
-			if (this.audioSource != null)
-				this.audioSource.play();
-			break;
-		case 1:
-			if (this.audioSource != null) {
-				this.audioSource.stop();
-				if (getInterruptSoundFile() != null)
-					IC2.audioManager.playOnce(this, getInterruptSoundFile());
-			}
-			break;
-		case 2:
-			if (this.audioSource != null)
-				this.audioSource.stop();
-			break;
-		}
-	}
+    public abstract String getInventoryName();
 
-	public static int applyModifier(int base, int extra, double multiplier) {
-		double ret = Math.round((base + extra) * multiplier);
-		return (ret > 2.147483647E9D) ? Integer.MAX_VALUE : (int) ret;
-	}
+    public ContainerBase<? extends TileEntityMultiMachine1> getGuiContainer(EntityPlayer entityPlayer) {
+        return new ContainerMultiMachine1(entityPlayer, this, this.sizeWorkingSlot);
+    }
 
-	public int getMode() {
-		return 0;
-	}
-	
-	/**
-	 * Буфер энергии
-	 */
-	public double getEnergy() {
-		return this.energy;
-	}
+    @SideOnly(Side.CLIENT)
+    public GuiScreen getGui(EntityPlayer entityPlayer, boolean isAdmin) {
+        return new GuiMultiMachine1(new ContainerMultiMachine1(entityPlayer, this, sizeWorkingSlot));
+    }
 
-	/**
-	 * Использовать энергию
-	 */
-	public boolean useEnergy(double amount) {
-		if (this.energy >= amount) {
-			this.energy -= amount;
-			return true;
-		}
-		return false;
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     *
+     * @return
+     */
+    public String getStartSoundFile() {
+        return null;
+    }
 
-	public void onGuiClosed(EntityPlayer entityPlayer) {
-	}
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+     *
+     * @return
+     */
+    public String getInterruptSoundFile() {
+        return null;
+    }
+
+    public void onNetworkEvent(int event) {
+        if (this.audioSource == null && getStartSoundFile() != null)
+            this.audioSource = IC2.audioManager.createSource(this, getStartSoundFile());
+        switch (event) {
+            case 0:
+                if (this.audioSource != null)
+                    this.audioSource.play();
+                break;
+            case 1:
+                if (this.audioSource != null) {
+                    this.audioSource.stop();
+                    if (getInterruptSoundFile() != null)
+                        IC2.audioManager.playOnce(this, getInterruptSoundFile());
+                }
+                break;
+            case 2:
+                if (this.audioSource != null)
+                    this.audioSource.stop();
+                break;
+        }
+    }
+
+    public int getMode() {
+        return 0;
+    }
+
+    /**
+     * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public double getEnergy() {
+        return this.energy;
+    }
+
+    /**
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     */
+    public boolean useEnergy(double amount) {
+        if (this.energy >= amount) {
+            this.energy -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public void onGuiClosed(EntityPlayer entityPlayer) {
+    }
 }
