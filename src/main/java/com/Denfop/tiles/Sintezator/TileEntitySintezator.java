@@ -1,20 +1,16 @@
 package com.Denfop.tiles.Sintezator;
 
-import com.Denfop.IUCore;
 import com.Denfop.tiles.base.TileSintezator;
 
-import net.minecraft.util.AxisAlignedBB;
 
-
-public class TileEntitySintezator extends TileSintezator 
-{
+public class TileEntitySintezator extends TileSintezator {
     public TileEntitySintezator() {
-        super("blockSintezator.name",11);
+        super("blockSintezator.name", 11);
     }
-    
+
     @Override
     public String getInvName() {
         return "Sintezator";
     }
-    
+
 }

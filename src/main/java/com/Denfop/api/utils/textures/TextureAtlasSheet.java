@@ -1,14 +1,5 @@
 package com.Denfop.api.utils.textures;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.Logger;
-
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,11 +9,24 @@ import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.Level;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
+import java.io.IOException;
 
 public class TextureAtlasSheet extends TextureAtlasSprite {
     private final int index;
     private final int rows;
     private final int columns;
+
+    private TextureAtlasSheet(String name, int index, int rows, int columns) {
+        super(name);
+        this.index = index;
+        this.rows = rows;
+        this.columns = columns;
+    }
 
     public static IIcon[] unstitchIcons(IIconRegister iconRegister, String name, int numIcons) {
         return unstitchIcons(iconRegister, name, numIcons, 1);
@@ -39,13 +43,6 @@ public class TextureAtlasSheet extends TextureAtlasSprite {
             icons[i] = texture;
         }
         return icons;
-    }
-
-    private TextureAtlasSheet(String name, int index, int rows, int columns) {
-        super(name);
-        this.index = index;
-        this.rows = rows;
-        this.columns = columns;
     }
 
     @Override
@@ -67,7 +64,7 @@ public class TextureAtlasSheet extends TextureAtlasSprite {
             resource = manager.getResource(location);
             image = ImageIO.read(resource.getInputStream());
         } catch (IOException ex) {
-        	FMLLog.log(Level.WARN, "Failed to load sub-texture from {0}: {1}", location.getResourcePath(), ex.getLocalizedMessage());
+            FMLLog.log(Level.WARN, "Failed to load sub-texture from {0}: {1}", location.getResourcePath(), ex.getLocalizedMessage());
             return true;
         } finally {
             if (resource != null)
@@ -87,7 +84,7 @@ public class TextureAtlasSheet extends TextureAtlasSprite {
         try {
             subImage = image.getSubimage(x * size, y * size, size, size);
         } catch (RasterFormatException ex) {
-        	FMLLog.log(Level.WARN, "Failed to load sub-texture from {0} - {1}x{2}: {3}", location.getResourcePath(), image.getWidth(), image.getHeight(), ex.getLocalizedMessage());
+            FMLLog.log(Level.WARN, "Failed to load sub-texture from {0} - {1}x{2}: {3}", location.getResourcePath(), image.getWidth(), image.getHeight(), ex.getLocalizedMessage());
             return true;
         }
         this.height = subImage.getHeight();
