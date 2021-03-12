@@ -1,26 +1,22 @@
-
-
 package com.Denfop.item;
 
-import net.minecraft.creativetab.CreativeTabs;
+import com.Denfop.IUCore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import java.util.ArrayList;
 import net.minecraft.util.IIcon;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import com.Denfop.IUCore;
+public class ItemSSPCrafring extends Item {
+    private final List<String> itemNames;
+    private final IIcon[] IIconsList;
+    private final int itemsCount;
 
-import net.minecraft.item.Item;
-
-public class ItemSSPCrafring extends Item
-{
-    private List<String> itemNames;
-    private IIcon[] IIconsList;
-    private int itemsCount;
-    
     public ItemSSPCrafring() {
         this.itemNames = new ArrayList<String>();
         this.IIconsList = new IIcon[11];
@@ -30,15 +26,15 @@ public class ItemSSPCrafring extends Item
         this.setMaxStackSize(64);
         this.addItemsNames();
     }
-    
+
     public String getUnlocalizedName(final ItemStack stack) {
         return this.itemNames.get(stack.getItemDamage());
     }
-    
+
     public IIcon getIconFromDamage(final int par1) {
         return this.IIconsList[par1];
     }
-    
+
     public void addItemsNames() {
         this.itemNames.add("itemIrradiantUranium");
         this.itemNames.add("itemEnrichedSunnarium");
@@ -52,7 +48,7 @@ public class ItemSSPCrafring extends Item
         this.itemNames.add("itemMTCore");
         this.itemNames.add("itemQuantumCore");
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister IIconRegister) {
         this.IIconsList[0] = IIconRegister.registerIcon("supersolarpanel:IrradiantUranium");
@@ -67,17 +63,17 @@ public class ItemSSPCrafring extends Item
         this.IIconsList[9] = IIconRegister.registerIcon("supersolarpanel:MTCore");
         this.IIconsList[10] = IIconRegister.registerIcon("supersolarpanel:QuantumCore");
     }
-    
+
     public void getSubItems(final Item item, final CreativeTabs tabs, final List itemList) {
         for (int meta = 0; meta <= this.itemNames.size() - 1; ++meta) {
-            final ItemStack stack = new ItemStack((Item)this, 1, meta);
+            final ItemStack stack = new ItemStack(this, 1, meta);
             itemList.add(stack);
         }
     }
-    
+
     public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List) {
         for (int i = 0; i <= this.IIconsList.length - 1; ++i) {
-            par3List.add(new ItemStack((Item)this, 1, i));
+            par3List.add(new ItemStack(this, 1, i));
         }
     }
 }

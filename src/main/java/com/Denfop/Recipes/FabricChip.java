@@ -1,7 +1,7 @@
 package com.Denfop.Recipes;
 
 public class FabricChip {
-	public static void recipe() {
-		
-	}
+    public static void recipe() {
+
+    }
 }

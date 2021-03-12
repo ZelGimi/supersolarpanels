@@ -1,33 +1,27 @@
-
-
 package com.Denfop.item.Modules;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import com.Denfop.IUCore;
+import com.Denfop.api.module.IModuleType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.util.ArrayList;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.Denfop.IUCore;
-import com.Denfop.api.module.IModuleType;
+public class module5 extends Item implements IModuleType {
+    private final List<String> itemNames;
+    private final IIcon[] IIconsList;
+    private final int itemsCount;
 
-import net.minecraft.item.Item;
-
-public class module5 extends Item implements IModuleType
-{
-    private List<String> itemNames;
-    private IIcon[] IIconsList;
-    private int itemsCount;
-    
     public module5() {
         this.itemNames = new ArrayList<String>();
         this.IIconsList = new IIcon[7];
@@ -37,15 +31,15 @@ public class module5 extends Item implements IModuleType
         this.setMaxStackSize(64);
         this.addItemsNames();
     }
-    
+
     public String getUnlocalizedName(final ItemStack stack) {
         return this.itemNames.get(stack.getItemDamage());
     }
-    
+
     public IIcon getIconFromDamage(final int par1) {
         return this.IIconsList[par1];
     }
-    
+
     public void addItemsNames() {
         this.itemNames.add("module51");
         this.itemNames.add("module52");
@@ -55,7 +49,7 @@ public class module5 extends Item implements IModuleType
         this.itemNames.add("module56");
         this.itemNames.add("module57");
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister IIconRegister) {
         this.IIconsList[0] = IIconRegister.registerIcon("supersolarpanel:module51");
@@ -67,49 +61,52 @@ public class module5 extends Item implements IModuleType
         this.IIconsList[6] = IIconRegister.registerIcon("supersolarpanel:module57");
 
     }
+
     public void addInformation(ItemStack itemStack, EntityPlayer player, List info, boolean b) {
         NBTTagCompound nbttagcompound;
         int meta = itemStack.getItemDamage();
         switch (meta) {
-          case 0:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("aerpanel") );
-              
-        	  
-            break;
-          case 1:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("earthpanel") ); 
-        	  break;
-          case 2:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("netherpanel") );       
-        	  break;
-          case 3:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("endpanel") );        
-        	 break;
-          case 4:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("nightpanel") );       
-        	   ;break;
-          case 5:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("sunpanel") );       
-        	 ;break;
-          case 6:
-        	  info.add(StatCollector.translateToLocal("ssp.modules12"));
-        	  info.add(StatCollector.translateToLocal("rainpanel") );    
-        	  ;break;
-         }}
+            case 0:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("aerpanel"));
+
+
+                break;
+            case 1:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("earthpanel"));
+                break;
+            case 2:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("netherpanel"));
+                break;
+            case 3:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("endpanel"));
+                break;
+            case 4:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("nightpanel"));
+                break;
+            case 5:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("sunpanel"));
+                break;
+            case 6:
+                info.add(StatCollector.translateToLocal("ssp.modules12"));
+                info.add(StatCollector.translateToLocal("rainpanel"));
+                break;
+        }
+    }
+
     public void getSubItems(final Item item, final CreativeTabs tabs, final List itemList) {
         for (int meta = 0; meta <= this.itemNames.size() - 1; ++meta) {
-            final ItemStack stack = new ItemStack((Item)this, 1, meta);
-            String ModulesString = I18n.format(getUnlocalizedName(stack), new Object[0]);
+            final ItemStack stack = new ItemStack(this, 1, meta);
+            String ModulesString = I18n.format(getUnlocalizedName(stack));
             IModuleType.setData(stack, ModulesString);
             itemList.add(stack);
         }
     }
-   
-   
+
+
 }

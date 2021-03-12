@@ -1,31 +1,24 @@
-
-
 package com.Denfop.item.matter;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import com.Denfop.IUCore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 
 import java.util.ArrayList;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
-
 import java.util.List;
 
-import com.Denfop.IUCore;
+public class matter extends Item {
+    private final List<String> itemNames;
+    private final IIcon[] IIconsList;
+    private final int itemsCount;
 
-import net.minecraft.item.Item;
-
-public class matter extends Item
-{
-    private List<String> itemNames;
-    private IIcon[] IIconsList;
-    private int itemsCount;
-    
     public matter() {
         this.itemNames = new ArrayList<String>();
         this.IIconsList = new IIcon[8];
@@ -34,17 +27,17 @@ public class matter extends Item
         this.setCreativeTab(IUCore.tabssp3);
         this.setMaxStackSize(64);
         this.addItemsNames();
-       
+
     }
-    
+
     public String getUnlocalizedName(final ItemStack stack) {
         return this.itemNames.get(stack.getItemDamage());
     }
-    
+
     public IIcon getIconFromDamage(final int par1) {
         return this.IIconsList[par1];
     }
-    
+
     public void addItemsNames() {
         this.itemNames.add("matter");
         this.itemNames.add("sun_matter");
@@ -55,7 +48,7 @@ public class matter extends Item
         this.itemNames.add("end_matter");
         this.itemNames.add("aer_matter");
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister IIconRegister) {
         this.IIconsList[0] = IIconRegister.registerIcon("supersolarpanel:matter");
@@ -67,22 +60,25 @@ public class matter extends Item
         this.IIconsList[6] = IIconRegister.registerIcon("supersolarpanel:end_matter");
         this.IIconsList[7] = IIconRegister.registerIcon("supersolarpanel:aer_matter");
     }
+
     public void addInformation(ItemStack itemStack, EntityPlayer player, List info, boolean b) {
         NBTTagCompound nbttagcompound;
         int meta = itemStack.getItemDamage();
         switch (meta) {
-        
-         }}
+
+        }
+    }
+
     public void getSubItems(final Item item, final CreativeTabs tabs, final List itemList) {
         for (int meta = 0; meta <= this.itemNames.size() - 1; ++meta) {
-            final ItemStack stack = new ItemStack((Item)this, 1, meta);
+            final ItemStack stack = new ItemStack(this, 1, meta);
             itemList.add(stack);
         }
     }
-  
+
     public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List) {
         for (int i = 0; i <= this.IIconsList.length - 1; ++i) {
-            par3List.add(new ItemStack((Item)this, 1, i));
+            par3List.add(new ItemStack(this, 1, i));
         }
     }
 }
