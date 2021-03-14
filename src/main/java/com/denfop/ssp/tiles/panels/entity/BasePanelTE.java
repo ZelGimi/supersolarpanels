@@ -58,12 +58,15 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	protected boolean hasSky;
 	protected boolean addedToEnet;
 
+	private int production;
+
 	public BasePanelTE(SolarConfig config) {
 		this.storage = 0;
 		this.maxStorage = config.maxStorage;
 		this.tier = config.tier;
 		this.chargeSlots = new InvSlotMultiCharge(this, tier, 9, InvSlot.Access.IO);
 		this.tierPower = EnergyNet.instance.getPowerFromTier(tier);
+		this.production=config.production;
 		
 	}
 
@@ -126,7 +129,7 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	}
 
 	public double getOfferedEnergy() {
-		return (this.storage < this.tierPower) ? this.storage : this.tierPower;
+		  return Math.min(this.production, this.storage);
 	}
 
 	public void drawEnergy(double amount) {
@@ -199,7 +202,7 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	}
 
 	public String getMaxOutput() {
-		return String.format("%s %s%s", Localization.translate(Constants.MOD_ID + ".gui.maxOutput"), Util.toSiString(EnergyNet.instance.getPowerFromTier(this.tier + 1), 3), Localization.translate("ic2.generic.text.EUt"));
+		return String.format("%s %s%s", Localization.translate(Constants.MOD_ID + ".gui.maxOutput"), Util.toSiString(this.production, 3), Localization.translate("ic2.generic.text.EUt"));
 	}
 
 	public void onGuiClosed(EntityPlayer player) {
@@ -230,15 +233,20 @@ public abstract class BasePanelTE extends TileEntityInventory implements IEnergy
 	public enum GenerationState {
 		NONE, NIGHT, DAY, RAIN,NIGHTRAIN,DAYRAIN
 	}
-
+	public int getMaxEnergyOutput() {
+        return this.production;
+    }
+    
 	public static class SolarConfig {
+		public int production;
 		final int maxStorage;
 		final int tier;
 
-		public SolarConfig(int maxStorage, int tier) {
+		public SolarConfig(int maxStorage, int tier,int production) {
 			this.maxStorage = maxStorage;
 			this.tier = tier;
-		}
+			this.production=production;
 
 	}
 }
+	}

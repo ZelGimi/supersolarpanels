@@ -69,8 +69,8 @@ public abstract class TileEntityRainPanel extends BasePanelTE {
 
 		private final int rainPower;
 
-		public SolarConfig(int rainPower, int maxStorage, int tier) {
-			super(maxStorage, tier);
+		public SolarConfig(int rainPower, int maxStorage, int tier,int production) {
+			super(maxStorage, tier,production);
 			this.rainPower = rainPower;
 		}
 	}

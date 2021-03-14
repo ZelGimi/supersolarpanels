@@ -101,8 +101,8 @@ public abstract class TileEntitySolarPanel extends BasePanelTE {
 		private final int dayPower;
 		private final int nightPower;
 
-		public SolarConfig(int dayPower, int nightPower, int maxStorage, int tier) {
-			super(maxStorage, tier);
+		public SolarConfig(int dayPower, int nightPower, int maxStorage, int tier,int production) {
+			super(maxStorage, tier,production);
 			this.dayPower = dayPower;
 			this.nightPower = nightPower;
 		}
