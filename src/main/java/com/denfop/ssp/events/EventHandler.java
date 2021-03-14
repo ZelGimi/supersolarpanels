@@ -94,12 +94,14 @@ public class EventHandler {
 	  }
 	      @SubscribeEvent
 	         public void jump(LivingJumpEvent  event) {
+	    	
 	    	  if (event.getEntityLiving() == null || !(event.getEntityLiving() instanceof EntityPlayer)) 
 	   			  return;
 	        	 
 	        	 EntityPlayer player = (EntityPlayer) event.getEntity();
-	        	 if(player.inventory.armorItemInSlot(0).getItem() instanceof  ItemArmorQuantumBoosts) {
-	        		 player.motionY +=0.22;
+	        	  for(ItemStack item :  player.inventory.armorInventory)
+	        	 if(item.getItem() instanceof  ItemArmorQuantumBoosts) {
+	        		 player.motionY +=0.25;
 	        		 
 	        	 }
 	        	 
